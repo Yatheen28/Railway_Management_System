@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Seat - Railway Management System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Basic seat styling */
+        .seat-container {
+            display: grid;
+            grid-template-columns: repeat(4, 50px); /* 4 seats per row, 50px width */
+            gap: 10px; /* space between seats */
+            margin-bottom: 20px;
+        }
+        .seat-radio {
+            opacity: 0; /* Hide the radio button itself */
+            position: absolute;
+        }
+
+        .seat-label {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .seat-label:hover {
+            background-color: #f0f0f0;
+        }
+
+        /* 'selected' state, using :checked */
+        .seat-radio:checked + .seat-label {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Book Your Seat</h2>
+        <form action="{{ url_for('book', schedule_id=schedule_id) }}" method="POST">
+            <div class="seat-container">
+                <input type="radio" id="A1" name="seat_no" value="A1" class="seat-radio" required>
+                <label for="A1" class="seat-label">A1</label>
+        
+                <input type="radio" id="A2" name="seat_no" value="A2" class="seat-radio" required>
+                <label for="A2" class="seat-label">A2</label>
+        
+                <input type="radio" id="A3" name="seat_no" value="A3" class="seat-radio" required>
+                <label for="A3" class="seat-label">A3</label>
+        
+                <input type="radio" id="A4" name="seat_no" value="A4" class="seat-radio" required>
+                <label for="A4" class="seat-label">A4</label>
+            </div>
+            <button type="submit" style="margin-top:20px;">Confirm Booking</button>
+        </form>
+        
+    </div>
+</body>
+</html>

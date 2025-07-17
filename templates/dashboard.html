@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Add some basic styling for the booking list */
+        .booking-list {
+            list-style: none;
+            padding: 0;
+        }
+        .booking-item {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .booking-item strong {
+            display: inline-block;
+            min-width: 150px; /* Increased width for labels */
+        }
+        .booking-header {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #007bff; /* Add a border for separation */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}" role="alert" style="padding: 10px; margin-bottom: 15px; border: 1px solid transparent; border-radius: 4px; background-color: #d4edda; color: #155724; border-color: #c3e6cb;">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        {% if user %}
+            <h2>Welcome, {{ user.name }}!</h2>
+            <p>Email: {{ user.email }}</p>
+        {% else %}
+            <h2>Welcome!</h2>
+            <p>Could not load user details.</p>
+        {% endif %}
+
+        <hr>
+
+        <h3 class="booking-header">Your Bookings:</h3>
+
+        {% if bookings %}
+            <ul class="booking-list">
+                {% for booking in bookings %}
+                    <li class="booking-item">
+                        <strong>Train:</strong> {{ booking.train_name }}<br>
+                        <strong>Date:</strong> {{ booking.travel_date }}<br>
+                        <strong>Departure:</strong> {{ booking.departure_station_name }} ({{ booking.dep_time }})<br>
+                        <strong>Arrival:</strong> {{ booking.arrival_station_name }} ({{ booking.arr_time }})<br>
+                        <strong>Seat:</strong> {{ booking.seat_no }}<br>
+                        <strong>Status:</strong> {{ booking.status }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>You have no bookings yet.</p>
+        {% endif %}
+        <hr>
+
+        <div class="link">
+            <a href="{{ url_for('search') }}">Book New Ticket</a> | <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Add this style to center the button */
+        .center-button {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-blue-100 to-purple-100 flex justify-center items-center min-h-screen p-4">
+    <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-2xl transition-transform hover:scale-105">
+        <h1 class="text-2xl font-semibold text-blue-600 text-center mb-6">Search Results</h1>
+
+        {% if results %}
+            <div class="overflow-x-auto">
+                <table class="min-w-full leading-normal shadow-md rounded-lg overflow-hidden">
+                    <thead class="bg-gray-200 text-gray-700">
+                        <tr>
+                            <th class="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold uppercase tracking-wider">Train Name</th>
+                            <th class="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold uppercase tracking-wider">Departure Station</th>
+                            <th class="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold uppercase tracking-wider">Arrival Station</th>
+                            <th class="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold uppercase tracking-wider">Travel Date</th>
+                            <th class="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold uppercase tracking-wider">Departure Time</th>
+                            <th class="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold uppercase tracking-wider">Arrival Time</th>
+                            <th class="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold uppercase tracking-wider">Book</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white">
+                        {% for result in results %}
+                            <tr>
+                                <td class="px-5 py-5 border-b border-gray-200 text-sm"><span class="font-italic text-gray-800">{{ result.train_name }}</span></td>
+                                <td class="px-5 py-5 border-b border-gray-200 text-sm"><span class="font-medium text-blue-600">{{ result.departure_station_name }}</span></td>
+                                <td class="px-5 py-5 border-b border-gray-200 text-sm"><span class="font-medium text-green-600">{{ result.arrival_station_name }}</span></td>
+                                <td class="px-5 py-5 border-b border-gray-200 text-sm"><span class="font-semibold text-gray-900">{{ result.travel_date }}</span></td>
+                                <td class="px-5 py-5 border-b border-gray-200 text-sm"><span class="font-bold text-indigo-600">{{ result.dep_time }}</span></td>
+                                <td class="px-5 py-5 border-b border-gray-200 text-sm"><span class="font-bold text-purple-600">{{ result.arr_time }}</span></td>
+                                <td class="px-5 py-5 border-b border-gray-200 text-sm">
+                                    <div class="center-button">
+                                        <a href="{{ url_for('book', schedule_id=result.schedule_id) }}" class="bg-gradient-to-r from-green-400 to-blue-500 ...">
+                                            Book Now
+                                        </a>
+                                        
+                                            Book Now
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="text-gray-500 text-center py-4">No trains found for the selected route and date.</p>
+        {% endif %}
+
+        <div class="mt-6 text-center">
+            <a href="/search" class="text-blue-500 hover:text-blue-700 hover:underline mr-4">Back to Search</a>
+            <a href="/dashboard" class="text-green-500 hover:text-green-700 hover:underline mr-4">Dashboard</a>
+            <a href="/logout" class="text-red-500 hover:text-red-700 hover:underline">Logout</a>
+        </div>
+    </div>
+</body>
+</html>
+

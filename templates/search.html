@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search for Trains</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Overall container for the page */
+        body {
+            display: flex; /* Use flexbox for centering */
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Ensure full viewport height */
+            margin: 0; /* Remove default body margin */
+            background-color: #f0f0f0; /* Optional background color */
+        }
+
+        .container {
+            width: 400px;
+            padding: 20px;
+            background-color: #f4f4f4;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .container h1{
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .search-form label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .search-form select,
+        .search-form input[type="date"] {
+            width: 100%;
+            padding: 8px 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .search-form button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .search-form button:hover {
+            background-color: #0056b3;
+        }
+        .link {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Search for Trains</h1>
+        <form class="search-form" action="{{ url_for('search') }}" method="post">
+            <label for="departure_station">Departure Station:</label>
+            <select id="departure_station" name="departure_station" required>
+                <option value="">Select Departure Station</option>
+                {% for station in stations %}
+                    <option value="{{ station.station_id }}">{{ station.name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="arrival_station">Arrival Station:</label>
+            <select id="arrival_station" name="arrival_station" required>
+                <option value="">Select Arrival Station</option>
+                {% for station in stations %}
+                    <option value="{{ station.station_id }}">{{ station.name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="travel_date">Travel Date:</label>
+            <input type="date" id="travel_date" name="travel_date" required>
+
+            <button type="submit">Search</button>
+        </form>
+        <div class="link">
+            <a href="{{ url_for('dashboard') }}">Dashboard</a> | <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
